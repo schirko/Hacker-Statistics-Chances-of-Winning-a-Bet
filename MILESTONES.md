@@ -10,13 +10,13 @@
 6. **Presentation**: 12 slides as HTML, PDF, PowerPoint (with speaker notes) and slide images, built from one slide list in `src/build_deck.py`.
 7. **Python code and tests**: `src/hacker_stats.py` with `pytest`; Node tests for the browser code.
 8. **Notebook 02: the exact answer and the value map** (`notebooks/02_exact_answer_and_value_map.ipynb`, also on the site): simulation vs exact, error vs sample size, value map, sensitivity.
+9. **Notebook 03: statistics** (`notebooks/03_statistics.ipynb`, also on the site): four confidence intervals and their coverage, Bayesian update and prior sensitivity, goodness-of-fit, two-proportion test with power, false alarms.
 
 ## Next, in priority order
 
-1. **Notebook 03: statistics** (intervals, bootstrap, Bayesian update, hypothesis tests) with `scipy` and `statsmodels` for comparison with the browser results.
-2. **Notebook 04: machine learning** with `scikit-learn` (logistic regression, neural network, k-means, isolation forest) on the same walks.
-3. **Richer ML features**: add roll history (not just the current step) to see whether anything beats the one-number model; the Markov property says it should not.
-4. **Reinforcement-learning demo**: let a player choose to stop at any roll and learn the best stopping rule with Q-learning.
+1. **Notebook 04: machine learning** with `scikit-learn` (logistic regression, neural network, k-means, isolation forest) on the same walks.
+2. **Richer ML features**: add roll history (not just the current step) to see whether anything beats the one-number model; the Markov property says it should not.
+3. **Reinforcement-learning demo**: let a player choose to stop at any roll and learn the best stopping rule with Q-learning.
 
 ## Known limits
 
