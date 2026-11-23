@@ -1,69 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>Hacker Statistics: Chances of Winning a Bet</title>
-<meta name="description" content="Interactive random-walk simulator: what are the odds of climbing to a target step by rolling dice?">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="Simulating thousands of dice-driven climbs to find the odds of winning a bet, then testing the answer with statistics and machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<!-- Shared back-to-portfolio bar: the portfolio owns backbar.css; full URLs so it also works on github.io -->
+<link rel="stylesheet" href="https://schirko.com/scott/backbar.css">
+<link rel="icon" href="https://schirko.com/scott/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="https://schirko.com/scott/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://schirko.com/scott/favicon-32.png">
+<link rel="apple-touch-icon" href="https://schirko.com/scott/apple-touch-icon.png">
 </head>
 <body>
+<div class="sx-backbar">
+  <a class="sx-back" href="https://schirko.com/scott/">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Portfolio
+  </a>
+  <span class="sx-crumb">Hacker Statistics</span>
+  <span class="sx-links"><a href="index.html">Overview</a><a href="explore.html">Simulator</a><a href="lab.html">Lab</a><a href="notebooks/01_hacker_statistics.html">Notebooks</a></span>
+</div>
+<div class="wrap">
+
 <header>
-  <h1>Hacker Statistics: Chances of Winning a Bet</h1>
-  <p class="sub">You're on the Empire State Building stairs. Roll a die each turn: 1&ndash;2 step down, 3&ndash;5 step up one, 6 roll again and climb that many. Can you reach the target? Simulate thousands of climbs to find your odds.</p>
+  <div class="kicker">Data science project &middot; Simulation, statistics and machine learning</div>
+  <h1>What are the chances of winning the bet?</h1>
+  <p class="lede">You bet you can climb 60 steps by rolling a die 100 times, with a 0.1% chance of clumsily falling back to the
+  bottom on every roll. Instead of working out a formula, we simulate thousands of climbs, then check the answer against
+  the exact math and ask what statistics and machine learning can add. Every step is shown and explained.</p>
+  <div class="links">
+    <a class="btn primary" href="explore.html">Try the simulator</a>
+    <a class="btn" href="lab.html">Data science lab</a>
+    <a class="btn" href="#presentation">The presentation</a>
+    <a class="btn" href="#findings">Key findings</a>
+    <a class="btn" href="notebooks/01_hacker_statistics.html">Read the notebook</a>
+    <a class="btn" href="https://github.com/schirko/Hacker-Statistics-Chances-of-Winning-a-Bet">View code on GitHub</a>
+  </div>
+  <p class="byline">By Scott Schirkofsky &middot; <a href="https://cornerpostlogic.com">CornerpostLogic.com</a></p>
 </header>
 
-<main>
-  <section class="panel controls">
-    <h2>Settings</h2>
-    <label>Walks (simulations) <input id="walks" type="number" min="1" max="20000" value="500"></label>
-    <label>Dice rolls per walk <input id="steps" type="number" min="1" max="1000" value="100"></label>
-    <label>Target step (the bet) <input id="target" type="number" min="1" max="5000" value="60"></label>
-    <label>Clumsiness: chance of falling to step 0 each roll (%)
-      <input id="clumsy" type="number" min="0" max="100" step="0.1" value="0.1"></label>
-    <label>Seed (optional, same seed = same result)
-      <input id="seed" type="number" placeholder="random" min="0"></label>
-    <div class="btns">
-      <button id="run">Run simulation</button>
-      <button id="reset" class="secondary">Reset</button>
+<section class="stats" aria-label="Headline numbers">
+  <div class="stat"><div class="v c-win">77.7%</div><div class="l">Exact chance of reaching step 60 in 100 rolls, with the 0.1% clumsiness</div></div>
+  <div class="stat"><div class="v c-win">83.7%</div><div class="l">Exact chance if nobody ever fell. Clumsiness costs about 6 points</div></div>
+  <div class="stat"><div class="v c-acc">9.5%</div><div class="l">Climbs that take at least one clumsy fall to zero during the 100 rolls</div></div>
+  <div class="stat"><div class="v c-gold">11</div><div class="l">Statistics and machine-learning methods in the lab, tested against the exact answer</div></div>
+</section>
+
+<figure>
+  <img src="images/headline.png" alt="Left: simulated climbs, with climbs that reach step 60 drawn in blue and the rest in grey. Right: where the climbs ended, with the exact probability drawn as a line over the simulated bars.">
+  <figcaption>Left: 200 simulated climbs; blue ones reached the target. Right: where 10,000 climbs ended, with the exact answer from a Markov chain drawn over the simulation.</figcaption>
+</figure>
+
+<h2 id="findings">The verdict: is it a good bet?</h2>
+<div class="verdict">
+  <p><b>Yes, about 78 times in 100.</b> The simulation, the exact calculation and the machine-learning models all agree.
+  The average climb ends around step 72, and the 0.1% chance of falling to zero costs about 6 points of win chance.
+  <a href="lab.html">See the lab</a>.</p>
+</div>
+
+<h2>Key findings</h2>
+<ul class="findings">
+  <li><b>Simulation matches the exact math.</b> Treating the game as a Markov chain gives the exact odds, 77.7%. A large
+  simulation lands on the same number, and its whole spread of outcomes matches the exact distribution.</li>
+  <li><b>You need surprisingly few walks.</b> 500 walks gives about &plusmn;4 points of uncertainty; the error shrinks with the
+  square root of the walks, so halving it takes four times as many. A Bayesian view and a bootstrap tell the same story.</li>
+  <li><b>You can know your odds mid-game.</b> Working backwards from the last roll gives a map of the chance of winning from every
+  position (a value function, the same idea reinforcement learning uses). From the start the chance is 77.7%; one third of the way in
+  and standing on step 40 it is 93%; on step 20 it is 77%.</li>
+  <li><b>Machine learning can learn those odds from examples.</b> A logistic regression and a small neural network, trained on
+  simulated walks, predict mid-game winners as well as the exact answer. On the test set they were essentially tied on AUC and on log loss, so the extra
+  flexibility of the neural network bought nothing: the true relationship is already a smooth S-curve.</li>
+  <li><b>Clumsiness really matters.</b> A formal two-proportion test confirms that the drop from 84% to 78% is not luck, and the
+  sensitivity table shows it hurts more the harder the target is.</li>
+  <li><b>It behaves like a textbook random walk.</b> Roll-to-roll changes are essentially uncorrelated while the level remembers where
+  it has been, with a steady positive drift of about three-quarters of a step per roll.</li>
+</ul>
+
+<!--PRESENTATION-->
+<h2 id="presentation">The story, as a presentation</h2>
+<div class="deck">
+  <a class="deck-thumb" href="presentation/hacker-stats-story.html" target="_blank" rel="noopener"><img src="presentation/cover.png" alt="Cover slide: What are the chances of winning the bet?"><span>12 slides</span></a>
+  <div>
+    <p class="note" style="margin-top:0">The whole project told as a 12-slide story: the bet, the simulation, the exact math, how many walks are enough,
+    your odds mid-game, what machine learning adds, and the verdict.</p>
+    <a class="btn primary" href="presentation/hacker-stats-story.html" target="_blank" rel="noopener">View the presentation</a>
+    <div class="dls">
+      <a class="dl" href="presentation/hacker-stats-story.pdf" download><span class="ext">PDF</span><span><b>PDF</b><small>Read or print &middot; 2.0 MB</small></span></a>
+      <a class="dl" href="presentation/hacker-stats-story.pptx" download><span class="ext">PPTX</span><span><b>PowerPoint</b><small>Editable, with speaker notes &middot; 2.0 MB</small></span></a>
+      <a class="dl" href="presentation/hacker-stats-story.html" download><span class="ext">HTML</span><span><b>HTML</b><small>One file, opens in any browser &middot; 2.7 MB</small></span></a>
+      <a class="dl" href="presentation/hacker-stats-story-slides.zip" download><span class="ext">ZIP</span><span><b>Slide images</b><small>One PNG per slide &middot; 2.3 MB</small></span></a>
     </div>
-  </section>
+  </div>
+</div>
+<!--/PRESENTATION-->
 
-  <section class="panel result" aria-live="polite">
-    <h2>Result</h2>
-    <div id="big" class="big">&mdash;</div>
-    <p id="plain" class="plain">Press <b>Run simulation</b> to see your odds.</p>
-    <dl id="stats" class="stats"></dl>
-  </section>
+<h2>How it was done</h2>
+<ol class="steps">
+  <li><b>Started from the notebook.</b> The original exercise (a DataCamp lesson in NumPy and Matplotlib) simulates dice, builds a
+  random walk, adds clumsiness and counts how often the walk reaches 60.</li>
+  <li><b>Rebuilt it for the browser.</b> The same rules run in plain JavaScript with a seedable random generator, so anyone can change
+  the settings and re-run it, and the same seed always gives the same result.</li>
+  <li><b>Solved it exactly.</b> A dynamic-programming version tracks the probability of every step after every roll. This gives the
+  true answer to check every other method against.</li>
+  <li><b>Tested the methods.</b> Statistics (confidence intervals, bootstrap, Bayesian updating, hypothesis tests, regression,
+  autocorrelation) and machine learning (logistic regression, a neural network, k-means clustering, outlier detection) are all
+  run on the same simulation and measured against the exact answer. A test suite checks the maths in Node.</li>
+</ol>
+<p class="note"><b>Limits.</b> The game is deliberately simple, so a complete exact answer exists; real problems rarely
+allow that check. The machine-learning models predict from a single number (the current step), which is all the game's rules allow
+them to use. Results from the browser use a pseudo-random generator that passes a fairness test but is not cryptographic.</p>
 
-  <section class="panel wide">
-    <h2>All the walks</h2>
-    <canvas id="walkChart" height="320"></canvas>
-    <p class="how"><b>How to read it:</b> each line is one climb. Horizontal axis = roll number, vertical = step reached. The dashed line is your target; <span class="gw">green</span> walks finished at or above it, <span class="gl">grey</span> walks did not. Sharp drops to zero are clumsy falls.</p>
-  </section>
+<h2>Methods used</h2>
+<ul class="nbs">
+  <li><a href="lab.html#exact"><span class="num">1</span><span class="nbtitle">Markov chain and dynamic programming</span></a><span class="blurb">The exact distribution of final steps, compared with the simulation using a KS statistic.</span></li>
+  <li><a href="lab.html#conv"><span class="num">2</span><span class="nbtitle">Law of large numbers, confidence intervals, bootstrap</span></a><span class="blurb">How the estimate settles and how sure we can be.</span></li>
+  <li><a href="lab.html#bayes"><span class="num">3</span><span class="nbtitle">Bayesian inference</span></a><span class="blurb">A Beta posterior over the win chance, updated as walks arrive.</span></li>
+  <li><a href="lab.html#vm"><span class="num">4</span><span class="nbtitle">Value function</span></a><span class="blurb">The chance of winning from every position, a core idea in reinforcement learning.</span></li>
+  <li><a href="lab.html#sens"><span class="num">5</span><span class="nbtitle">Sensitivity analysis</span></a><span class="blurb">Exact odds across targets and clumsiness levels.</span></li>
+  <li><a href="lab.html#r2"><span class="num">6</span><span class="nbtitle">Linear regression and R&sup2;</span></a><span class="blurb">How early the outcome becomes predictable.</span></li>
+  <li><a href="lab.html#ml"><span class="num">7</span><span class="nbtitle">Logistic regression and a neural network</span></a><span class="blurb">Train/test split, AUC, log loss and calibration against the exact best answer.</span></li>
+  <li><a href="lab.html#km"><span class="num">8</span><span class="nbtitle">k-means clustering</span></a><span class="blurb">Unsupervised grouping of walks by shape, with the elbow method.</span></li>
+  <li><a href="lab.html#out"><span class="num">9</span><span class="nbtitle">Outlier detection</span></a><span class="blurb">Robust z-scores based on the median.</span></li>
+  <li><a href="lab.html#acf"><span class="num">10</span><span class="nbtitle">Time-series autocorrelation</span></a><span class="blurb">Why a random walk's changes are unpredictable but its level is not.</span></li>
+  <li><a href="lab.html#tests"><span class="num">11</span><span class="nbtitle">Hypothesis tests</span></a><span class="blurb">A chi-square test of the random number generator and a two-proportion z-test on clumsiness.</span></li>
+</ul>
 
-  <section class="panel wide">
-    <h2>Where the walks ended</h2>
-    <canvas id="histChart" height="300"></canvas>
-    <p class="how"><b>How to read it:</b> each bar counts how many walks ended in that range of steps. Bars to the right of the dashed target line are wins; their share of all walks is your chance of winning the bet.</p>
-  </section>
+<h2 id="notebooks">The analysis, step by step</h2>
+<p class="note">The notebook explains each step, shows the code and its result, then how to read it.</p>
+<ul class="nbs">
+  <li><a href="notebooks/01_hacker_statistics.html"><span class="num">01</span><span class="nbtitle">Hacker statistics: chances of winning a bet</span></a><span class="blurb">The original exercise: coin tosses and dice, a random walk, clumsiness, and the chance of reaching step 60.</span></li>
+</ul>
 
-  <section class="panel wide">
-    <h2>Roll it yourself</h2>
-    <div class="play">
-      <div><button id="coin" class="secondary">Toss a coin</button> <span id="coinOut" class="out">&mdash;</span></div>
-      <div><button id="die" class="secondary">Roll a die</button> <span id="dieOut" class="out">&mdash;</span></div>
-    </div>
-  </section>
+<h2>More</h2>
+<p><a href="explore.html">Simulator and step-by-step explainer</a> &middot; <a href="lab.html">Data science lab</a> &middot;
+<a href="https://github.com/schirko/Hacker-Statistics-Chances-of-Winning-a-Bet">Code on GitHub</a></p>
 
-  <section class="panel wide about">
-    <h2>About this project</h2>
-    <p>Hacker statistics means answering a probability question by simulating it many times instead of working out a formula. This page is a browser version of a Python notebook built with NumPy and Matplotlib from a DataCamp exercise.
-    The full step-by-step notebook is in the
-    <a href="https://github.com/schirko/Hacker-Statistics-Chances-of-Winning-a-Bet">GitHub repository</a>.</p>
-  </section>
-</main>
-<script src="sim.js"></script>
-<script src="app.js"></script>
+<footer>
+  <a href="https://schirko.com/scott/">Scott Schirkofsky</a> &middot; <a href="https://cornerpostlogic.com">CornerpostLogic.com</a> &middot; Page built November 22, 2026
+</footer>
+</div>
+
 </body>
 </html>

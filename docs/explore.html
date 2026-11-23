@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Simulator: Hacker Statistics</title>
+<meta name="description" content="Change the rules of the dice-climb bet and simulate it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<!-- Shared back-to-portfolio bar: the portfolio owns backbar.css; full URLs so it also works on github.io -->
+<link rel="stylesheet" href="https://schirko.com/scott/backbar.css">
+<link rel="icon" href="https://schirko.com/scott/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="https://schirko.com/scott/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://schirko.com/scott/favicon-32.png">
+<link rel="apple-touch-icon" href="https://schirko.com/scott/apple-touch-icon.png">
+</head>
+<body>
+<div class="sx-backbar">
+  <a class="sx-back" href="https://schirko.com/scott/">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Portfolio
+  </a>
+  <span class="sx-crumb">Hacker Statistics</span>
+  <span class="sx-links"><a href="index.html">Overview</a><a href="explore.html">Simulator</a><a href="lab.html">Lab</a><a href="notebooks/01_hacker_statistics.html">Notebooks</a></span>
+</div>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Simulator &middot; Hacker statistics</div>
+  <h1>Try the bet yourself</h1>
+  <p class="lede">You are climbing stairs. Each turn, roll a die: 1&ndash;2 step down, 3&ndash;5 step up one, 6 roll again and climb that many.
+  Can you reach the target? Simulate thousands of climbs to find your odds.</p>
+</header>
+
+<div class="grid2">
+  <section class="panel">
+    <h2>Settings</h2>
+    <label>Walks (simulations) <input id="walks" type="number" min="1" max="20000" value="500"></label>
+    <label>Dice rolls per walk <input id="steps" type="number" min="1" max="1000" value="100"></label>
+    <label>Target step (the bet) <input id="target" type="number" min="1" max="5000" value="60"></label>
+    <label>Clumsiness: chance of falling to step 0 each roll (%) <input id="clumsy" type="number" min="0" max="100" step="0.1" value="0.1"></label>
+    <label>Seed (optional, same seed = same result) <input id="seed" type="number" placeholder="random" min="0"></label>
+    <div class="btns"><button id="run" class="btn primary">Run simulation</button><button id="reset" class="btn secondary">Reset</button></div>
+  </section>
+  <section class="panel" aria-live="polite">
+    <h2>Result</h2>
+    <div id="big" class="big">&mdash;</div>
+    <p id="plain" class="plain">Press <b>Run simulation</b> to see your odds.</p>
+    <dl id="stats" class="stats"></dl>
+  </section>
+</div>
+
+<section class="panel">
+  <h2>All the walks</h2>
+  <canvas id="walkChart" height="320"></canvas>
+  <p class="how"><b>How to read it:</b> each line is one climb. Horizontal axis = roll number, vertical = step reached. The dashed line is your target; <span class="gw">blue</span> walks finished at or above it, <span class="gl">grey</span> walks did not. Sharp drops to zero are clumsy falls.</p>
+</section>
+<section class="panel">
+  <h2>Where the walks ended</h2>
+  <canvas id="histChart" height="300"></canvas>
+  <p class="how"><b>How to read it:</b> each bar counts how many walks ended in that range of steps. Bars right of the dashed target line are wins; their share of all walks is your chance of winning the bet.</p>
+</section>
+<section class="panel">
+  <h2>Roll it yourself</h2>
+  <div class="play">
+    <div><button id="coin" class="btn secondary">Toss a coin</button> <span id="coinOut" class="out">&mdash;</span></div>
+    <div><button id="die" class="btn secondary">Roll a die</button> <span id="dieOut" class="out">&mdash;</span></div>
+  </div>
+</section>
+
+<section class="panel" id="how">
+    <h2>How it works, step by step</h2>
+    <p class="how">These are the same steps as the notebook, each with a live demo. Each one covers what we are looking for, how to read it, what it means, and what's next.</p>
+    <div class="step" id="step1">
+      <h3>Step 1: One roll of the die</h3>
+      <p><b>What we're looking for:</b> How does a single die roll decide the next move?</p>
+      <button id="s1btn" class="btn">Roll the die</button> <span id="s1out" class="out">&mdash;</span><p id="s1txt" class="plain"></p>
+      <p><b>How to read it:</b> The die and the move it causes are shown below. A 6 triggers a second roll that adds that many steps.</p>
+      <p><b>What it means:</b> Each roll is random, but the rules turn it into a move: 1&ndash;2 down, 3&ndash;5 up one, 6 climb by a second roll (1&ndash;6). Going down can never take you below step 0.</p>
+      <p><b>What's next:</b> A single roll tells you almost nothing about the bet. The next step strings 100 rolls together.</p>
+    </div>
+    <div class="step" id="step2">
+      <h3>Step 2: One random walk</h3>
+      <p><b>What we're looking for:</b> Where does one climb of 100 rolls end up?</p>
+      <button id="s2btn" class="btn">Generate a walk</button> <span id="s2out" class="out"></span><canvas id="s2c" height="220"></canvas>
+      <p><b>How to read it:</b> The line is your step number after each roll. The dashed line is the target of 60.</p>
+      <p><b>What it means:</b> This is a <b>random walk</b>: each step depends on the previous one, which is what makes it a walk and not just a list of random numbers. One walk is one possible story, and it can end above or below the target.</p>
+      <p><b>What's next:</b> One story is not an answer. Step 3 repeats the walk thousands of times.</p>
+    </div>
+    <div class="step" id="step3">
+      <h3>Step 3: Thousands of walks</h3>
+      <p><b>What we're looking for:</b> How are the final steps spread out over many climbs?</p>
+      <button id="s3btn" class="btn">Simulate 10,000 walks</button> <span id="s3out" class="out"></span><canvas id="s3c" height="240"></canvas>
+      <p><b>How to read it:</b> Each bar counts walks that ended in that range of steps. Bars right of the dashed target line are wins.</p>
+      <p><b>What it means:</b> The spread is the key idea of hacker statistics: simulate the game many times and read the odds from the pile of results. The share of walks ending at or above 60 is the estimated chance.</p>
+      <p><b>What's next:</b> So far nobody ever falls. Step 4 adds clumsiness.</p>
+    </div>
+    <div class="step" id="step4">
+      <h3>Step 4: Add clumsiness</h3>
+      <p><b>What we're looking for:</b> How much does a 0.1% chance of falling to step 0 on each roll hurt the odds?</p>
+      <button id="s4btn" class="btn">Compare 10,000 walks each</button> <span id="s4out" class="out"></span><canvas id="s4c" height="200"></canvas>
+      <p><b>How to read it:</b> Two bars: the win chance with no clumsiness, and with the 0.1% fall chance used in the notebook.</p>
+      <p><b>What it means:</b> A fall is rare per roll, but over 100 rolls it happens to roughly one walk in ten, and it wipes out the progress made so far. That lowers the odds noticeably.</p>
+      <p><b>What's next:</b> Step 5 turns the result into one number to bet on.</p>
+    </div>
+    <div class="step" id="step5">
+      <h3>Step 5: The answer</h3>
+      <p><b>What we're looking for:</b> What are the chances of winning the bet?</p>
+      <button id="s5btn" class="btn">Run it once more</button> <span id="s5out" class="out"></span>
+      <p><b>How to read it:</b> Chance of winning = walks that reached the target &divide; total walks.</p>
+      <p><b>What it means:</b> With the notebook's settings the answer comes out around <b>78%</b> (exactly 77.7%). Because it is simulated, each run differs by a little; more walks makes it steadier.</p>
+      <p><b>What's next:</b> The <a href="lab.html">data science lab</a> checks this against the exact math and tests it with statistics and machine learning.</p>
+    </div>
+  </section>
+
+<p class="note" style="margin-top:28px">Ready for more? The <a href="lab.html">data science lab</a> tests the answer with statistics and machine learning.</p>
+
+<footer>
+  <a href="https://schirko.com/scott/">Scott Schirkofsky</a> &middot; <a href="https://cornerpostlogic.com">CornerpostLogic.com</a> &middot; Page built November 22, 2026
+</footer>
+</div>
+<script src="theme.js"></script>
+<script src="sim.js"></script>
+<script src="app.js"></script>
+<script src="explainer.js"></script>
+</body>
+</html>

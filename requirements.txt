@@ -1,0 +1,10 @@
+numpy
+matplotlib
+scikit-learn
+scipy
+pytest
+# only needed to rebuild the presentation and notebook page
+pillow
+python-pptx
+playwright
+nbconvert

@@ -1,9 +1,11 @@
 (function () {
   const $ = (id) => document.getElementById(id);
-  const WIN = "#16a34a", LOSE = "#9aa3b2", ACCENT = "#2563eb", INK = "#1c2430", GRID = "#e5e9f0";
+  let WIN, LOSE, ACCENT, INK, GRID, GOLD, MUTED;
+  function refreshColors() { const t = Theme.get(); WIN = t.win; LOSE = t.lose; ACCENT = t.accent; INK = t.ink; GRID = t.line; GOLD = t.gold; MUTED = t.muted; }
   const DEFAULTS = { walks: 500, steps: 100, target: 60, clumsy: 0.1, seed: "" };
 
   function setup(canvas) {
+    refreshColors();
     const dpr = window.devicePixelRatio || 1;
     const w = canvas.clientWidth, h = parseInt(canvas.getAttribute("height"), 10);
     canvas.width = w * dpr; canvas.height = h * dpr;
@@ -55,7 +57,7 @@
     });
     ctx.globalAlpha = 1;
     targetLine(ctx, m, w, Y(p.target), "Target " + p.target);
-    if (res.all.length > 300) { ctx.fillStyle = "#5b6677"; ctx.textAlign = "right"; ctx.fillText("showing first 300 of " + res.all.length + " walks", w - m.r, m.t + 12); }
+    if (res.all.length > 300) { ctx.fillStyle = MUTED; ctx.textAlign = "right"; ctx.fillText("showing first 300 of " + res.all.length + " walks", w - m.r, m.t + 12); }
   }
 
   function drawHist(res, p) {
@@ -71,7 +73,7 @@
     const X = (v) => m.l + (v / (maxEnd + 1)) * iw;
     counts.forEach((c, i) => {
       const lo = i * bw, hi = (i + 1) * bw;
-      ctx.fillStyle = lo >= p.target ? WIN : (hi > p.target ? "#7fbf94" : LOSE);
+      ctx.fillStyle = lo >= p.target ? WIN : (hi > p.target ? GOLD : LOSE);
       const bh = (c / cmax) * ih;
       ctx.fillRect(X(lo) + 1, m.t + ih - bh, X(hi) - X(lo) - 2, bh);
     });
@@ -124,6 +126,7 @@
   $("reset").addEventListener("click", reset);
   $("coin").addEventListener("click", () => { $("coinOut").textContent = Math.random() < 0.5 ? "Heads" : "Tails"; });
   $("die").addEventListener("click", () => { $("dieOut").textContent = 1 + Math.floor(Math.random() * 6); });
-  window.addEventListener("resize", () => { if (last) { drawWalks(last.res, last.p); drawHist(last.res, last.p); } });
+  const redraw = () => { if (last) { drawWalks(last.res, last.p); drawHist(last.res, last.p); } };
+  window.addEventListener("resize", redraw); Theme.onChange(redraw);
   run();
 })();
