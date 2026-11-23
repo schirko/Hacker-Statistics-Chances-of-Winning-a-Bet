@@ -11,6 +11,7 @@ You bet you can climb **60 steps** by rolling a die **100 times**. Each roll: 1-
 | Part | Where | What it is |
 |---|---|---|
 | Original notebook | `Hacker Statistics-Chances of Winning a Bet.ipynb` | The DataCamp exercise: coin, dice, random walk, clumsiness, chance of reaching 60 (NumPy + Matplotlib) |
+| Notebook 02 | `notebooks/02_exact_answer_and_value_map.ipynb` | The exact answer (Markov chain), the value map, error vs simulation size, and sensitivity to the rules; run it in PyCharm |
 | Project site | `docs/` | Overview, simulator, data science lab, notebook page and presentation (plain HTML/CSS/JS, no build step) |
 | Python version | `src/hacker_stats.py` | NumPy simulation, exact Markov-chain answer, win-probability map |
 | Figures and deck | `src/make_figures.py`, `src/build_deck.py` | Chart images and the presentation (HTML, PDF, PowerPoint, slide images) |
