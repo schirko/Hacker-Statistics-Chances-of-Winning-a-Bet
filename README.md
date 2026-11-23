@@ -15,6 +15,7 @@ You bet you can climb **60 steps** by rolling a die **100 times**. Each roll: 1-
 | Notebook 03 | `notebooks/03_statistics.ipynb` | Confidence intervals and their coverage, Bayesian update, goodness-of-fit, two-proportion test and power, false alarms (`scipy`, `statsmodels`) |
 | Notebook 04 | `notebooks/04_machine_learning.ipynb` | Logistic regression, neural network, gradient boosting vs the exact answer; history features; learning curve; k-means; isolation forest (`scikit-learn`) |
 | Notebook 05 | `notebooks/05_q_learning_when_to_stop.ipynb` | A stopping version of the game solved exactly (dynamic programming) and by Q-learning; code in `src/stopping.py` |
+| Roll-or-stop game | `docs/game.html`, `docs/stopping.js` | Browser game: decide when to stop, with the exact best move shown beside yours (same solution as notebook 05) |
 | Project site | `docs/` | Overview, simulator, data science lab, notebook page and presentation (plain HTML/CSS/JS, no build step) |
 | Python version | `src/hacker_stats.py` | NumPy simulation, exact Markov-chain answer, win-probability map |
 | Figures and deck | `src/make_figures.py`, `src/build_deck.py` | Chart images and the presentation (HTML, PDF, PowerPoint, slide images) |
@@ -50,6 +51,7 @@ pip install -r requirements.txt
 python -m pytest            # Python tests
 node tests/test_sim.js      # JavaScript simulation tests
 node tests/test_analytics.js
+node tests/test_stopping.js     # the roll-or-stop game logic
 ```
 
 **Rebuild the figures and the presentation** (after changing the simulation or the slide text):
