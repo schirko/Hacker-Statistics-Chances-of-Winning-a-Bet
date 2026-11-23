@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hacker Statistics: Chances of Winning a Bet</title>
+<meta name="description" content="Interactive random-walk simulator: what are the odds of climbing to a target step by rolling dice?">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Hacker Statistics: Chances of Winning a Bet</h1>
+  <p class="sub">You're on the Empire State Building stairs. Roll a die each turn: 1&ndash;2 step down, 3&ndash;5 step up one, 6 roll again and climb that many. Can you reach the target? Simulate thousands of climbs to find your odds.</p>
+</header>
+
+<main>
+  <section class="panel controls">
+    <h2>Settings</h2>
+    <label>Walks (simulations) <input id="walks" type="number" min="1" max="20000" value="500"></label>
+    <label>Dice rolls per walk <input id="steps" type="number" min="1" max="1000" value="100"></label>
+    <label>Target step (the bet) <input id="target" type="number" min="1" max="5000" value="60"></label>
+    <label>Clumsiness: chance of falling to step 0 each roll (%)
+      <input id="clumsy" type="number" min="0" max="100" step="0.1" value="0.1"></label>
+    <label>Seed (optional, same seed = same result)
+      <input id="seed" type="number" placeholder="random" min="0"></label>
+    <div class="btns">
+      <button id="run">Run simulation</button>
+      <button id="reset" class="secondary">Reset</button>
+    </div>
+  </section>
+
+  <section class="panel result" aria-live="polite">
+    <h2>Result</h2>
+    <div id="big" class="big">&mdash;</div>
+    <p id="plain" class="plain">Press <b>Run simulation</b> to see your odds.</p>
+    <dl id="stats" class="stats"></dl>
+  </section>
+
+  <section class="panel wide">
+    <h2>All the walks</h2>
+    <canvas id="walkChart" height="320"></canvas>
+    <p class="how"><b>How to read it:</b> each line is one climb. Horizontal axis = roll number, vertical = step reached. The dashed line is your target; <span class="gw">green</span> walks finished at or above it, <span class="gl">grey</span> walks did not. Sharp drops to zero are clumsy falls.</p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Where the walks ended</h2>
+    <canvas id="histChart" height="300"></canvas>
+    <p class="how"><b>How to read it:</b> each bar counts how many walks ended in that range of steps. Bars to the right of the dashed target line are wins; their share of all walks is your chance of winning the bet.</p>
+  </section>
+
+  <section class="panel wide">
+    <h2>Roll it yourself</h2>
+    <div class="play">
+      <div><button id="coin" class="secondary">Toss a coin</button> <span id="coinOut" class="out">&mdash;</span></div>
+      <div><button id="die" class="secondary">Roll a die</button> <span id="dieOut" class="out">&mdash;</span></div>
+    </div>
+  </section>
+
+  <section class="panel wide about">
+    <h2>About this project</h2>
+    <p>Hacker statistics means answering a probability question by simulating it many times instead of working out a formula. This page is a browser version of a Python notebook built with NumPy and Matplotlib from a DataCamp exercise.
+    The full step-by-step notebook is in the
+    <a href="https://github.com/schirko/Hacker-Statistics-Chances-of-Winning-a-Bet">GitHub repository</a>.</p>
+  </section>
+</main>
+<script src="sim.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
