@@ -53,6 +53,14 @@
   <div class="stat"><div class="v c-gold">11</div><div class="l">Statistics and machine-learning methods in the lab, tested against the exact answer</div></div>
 </section>
 
+<h2>The bet in plain words</h2>
+<ul class="findings">
+  <li><b>The climb.</b> You start on step 0 and roll a die 100 times. A 1 or 2 moves you down one step (never below 0), a 3, 4 or 5 moves you up one step, and a 6 lets you roll again and climb that many.</li>
+  <li><b>The bet.</b> You win if you finish the 100 rolls on step 60 or higher.</li>
+  <li><b>Clumsiness.</b> After every roll there is a 0.1% chance you slip and fall all the way back to step 0. That is rare on any one roll, but over 100 rolls about 1 climb in 10 takes a fall, and a fall erases all your progress. It is the twist from the original exercise, and it lowers your chance of winning from 83.7% to 77.7%.</li>
+  <li><b>Hacker statistics.</b> Instead of working out the odds with a formula, play the game thousands of times on the computer and count how often you win. The project does that, then checks the answer against the exact maths.</li>
+</ul>
+
 <figure>
   <img src="images/headline.png" alt="Left: simulated climbs, with climbs that reach step 60 drawn in blue and the rest in grey. Right: where the climbs ended, with the exact probability drawn as a line over the simulated bars.">
   <figcaption>Left: 200 simulated climbs; blue ones reached the target. Right: where 10,000 climbs ended, with the exact answer from a Markov chain drawn over the simulation.</figcaption>
@@ -83,19 +91,35 @@
   it has been, with a steady positive drift of about three-quarters of a step per roll.</li>
 </ul>
 
+<h2 id="real-life">Why this matters in real life</h2>
+<p>The dice game is a toy, but the method is used constantly. Build a model of how something works, run it thousands of times with random inputs, and read the odds from the pile of results. This is called Monte Carlo simulation (hacker statistics in the DataCamp lesson).</p>
+<ul class="findings">
+  <li><b>Money and risk.</b> Simulating thousands of possible market paths shows the chance a portfolio or pension runs out of money, or how bad a bad year could get. A stock price is often modelled as a random walk, like the climber. Insurers use the same idea to ask how often several big claims land in one year.</li>
+  <li><b>Planning and supply chains.</b> Simulate delivery times, demand and delays to find the chance a project finishes on time, or how much stock to hold so shelves are not empty. This is the kind of problem behind my <a href="https://schirko.com/scott/gis-supply-chain/perishable/">perishable-inventory project</a>.</li>
+  <li><b>Science and medicine.</b> Estimate how often a study of a given size would detect a real effect (notebook 03 does this with a power calculation), or how a disease might spread.</li>
+  <li><b>When to act.</b> The roll-or-stop <a href="game.html">game</a> turns "what are my odds?" into "when should I stop?" The same question appears in trading, pricing, and when to cut your losses on a project.</li>
+</ul>
+<p><b>Why simulate instead of calculating?</b> Here the exact answer can be worked out (77.7%), and the project does that. Most real problems are too tangled for a formula. A simulation needs only the rules, however messy they are.</p>
+<p><b>What this project adds on top of the simulation:</b></p>
+<ul class="findings">
+  <li><b>How sure the number is.</b> A result of 76.4% from 500 climbs is not the truth. Confidence intervals and a Bayesian update put an honest margin of error on it (notebook 03).</li>
+  <li><b>Whether the model is right.</b> A simulation is only as good as its rules. Here the exact answer lets us check it; in real work you would compare against actual data.</li>
+  <li><b>Knowing when a fancier tool will not help.</b> A neural network matched a simple S-curve because that was all the information allowed (notebook 04), and Q-learning needed far more games than the exact method needed seconds (notebook 05).</li>
+</ul>
+
 <!--PRESENTATION-->
 <h2 id="presentation">The story, as a presentation</h2>
 <div class="deck">
-  <a class="deck-thumb" href="presentation/hacker-stats-story.html" target="_blank" rel="noopener"><img src="presentation/cover.png" alt="Cover slide: What are the chances of winning the bet?"><span>12 slides</span></a>
+  <a class="deck-thumb" href="presentation/hacker-stats-story.html" target="_blank" rel="noopener"><img src="presentation/cover.png" alt="Cover slide: What are the chances of winning the bet?"><span>13 slides</span></a>
   <div>
-    <p class="note" style="margin-top:0">The whole project told as a 12-slide story: the bet, the simulation, the exact math, how many walks are enough,
+    <p class="note" style="margin-top:0">The whole project told as a 13-slide story: the bet, the simulation, the exact math, how many walks are enough,
     your odds mid-game, what machine learning adds, and the verdict.</p>
     <a class="btn primary" href="presentation/hacker-stats-story.html" target="_blank" rel="noopener">View the presentation</a>
     <div class="dls">
       <a class="dl" href="presentation/hacker-stats-story.pdf" download><span class="ext">PDF</span><span><b>PDF</b><small>Read or print &middot; 2.0 MB</small></span></a>
       <a class="dl" href="presentation/hacker-stats-story.pptx" download><span class="ext">PPTX</span><span><b>PowerPoint</b><small>Editable, with speaker notes &middot; 2.0 MB</small></span></a>
       <a class="dl" href="presentation/hacker-stats-story.html" download><span class="ext">HTML</span><span><b>HTML</b><small>One file, opens in any browser &middot; 2.7 MB</small></span></a>
-      <a class="dl" href="presentation/hacker-stats-story-slides.zip" download><span class="ext">ZIP</span><span><b>Slide images</b><small>One PNG per slide &middot; 2.3 MB</small></span></a>
+      <a class="dl" href="presentation/hacker-stats-story-slides.zip" download><span class="ext">ZIP</span><span><b>Slide images</b><small>One PNG per slide &middot; 2.5 MB</small></span></a>
     </div>
   </div>
 </div>

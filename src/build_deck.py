@@ -81,6 +81,12 @@ S = [
         ("Autocorrelation", "Roll-to-roll changes are unpredictable, so it is a true random walk, with a drift near three-quarters of a step per roll."),
         ("Hypothesis tests", "A chi-square test says the die is fair. A z-test says clumsiness really does lower the odds.")],
       notes="All of these run live in the lab on the project site."),
+ dict(kind="cards", title="Why this matters beyond the dice", cards=[
+        ("Money and risk", "Simulate thousands of market paths to see the chance a portfolio runs out, or how bad a bad year could get. Insurers ask how often big claims pile up."),
+        ("Planning and supply chains", "Simulate delays and demand to find the chance a project finishes on time, or how much stock to hold so shelves are not empty."),
+        ("Science and medicine", "Estimate how often a study of a given size would find a real effect, or how a disease might spread."),
+        ("When to act", "The roll-or-stop game turns \"what are my odds?\" into \"when should I stop?\", the same question as in trading, pricing and cutting a project's losses.")],
+      notes="The dice game is a toy, but the method is used constantly: build a model, run it thousands of times with random inputs, and read the odds from the results. Here the exact answer lets us check the model; in real work you would compare against data. The extra value is the margin of error, checking the model, and the decision about when to act."),
  dict(kind="cards", title="The verdict: a good bet, with one risk", cards=[
         ("A good bet", f"About 78 times in 100. The exact answer is **{pc(F['exact'])}**."), ("The risk", "A fall back to zero. The 0.1% fall chance costs about **6 points**."),
         ("Every method agrees", "Simulation, exact math and machine learning all give the same answer.")],
