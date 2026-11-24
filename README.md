@@ -1,6 +1,6 @@
 # Hacker Statistics: Chances of Winning a Bet
 
-You bet you can climb **60 steps** by rolling a die **100 times**. Each roll: 1-2 step down (never below 0), 3-5 step up one, 6 roll again and climb that many. Every roll there is also a 0.1% chance of clumsily falling back to step 0.
+You bet you can climb **60 steps** by rolling a die **100 times**. Each roll: 1-2 step down one (never below 0), 3-5 step up one, 6 roll again and climb that many. Every roll there is also a 0.1% chance of clumsily falling back to step 0.
 
 **Hacker statistics** means answering a probability question by simulating it thousands of times instead of deriving a formula. This project does that, then checks the answer with exact math, statistics and machine learning.
 
@@ -15,6 +15,7 @@ You bet you can climb **60 steps** by rolling a die **100 times**. Each roll: 1-
 | Notebook 03 | `notebooks/03_statistics.ipynb` | Confidence intervals and their coverage, Bayesian update, goodness-of-fit, two-proportion test and power, false alarms (`scipy`, `statsmodels`) |
 | Notebook 04 | `notebooks/04_machine_learning.ipynb` | Logistic regression, neural network, gradient boosting vs the exact answer; history features; learning curve; k-means; isolation forest (`scikit-learn`) |
 | Notebook 05 | `notebooks/05_q_learning_when_to_stop.ipynb` | A stopping version of the game solved exactly (dynamic programming) and by Q-learning; code in `src/stopping.py` |
+| Notebook 06 | `notebooks/06_learning_the_quit_zone.ipynb` | Why notebook 05's learner missed the quit zone: exploring starts and forgetting tested one at a time, a forgetting sweep, a learning curve, and a neural-network learner compared with the table; code in `src/stopping.py` |
 | Roll-or-stop game | `docs/game.html`, `docs/stopping.js` | Browser game: decide when to stop, with the exact best move shown beside yours (same solution as notebook 05) |
 | Project site | `docs/` | Overview, simulator, data science lab, notebook page and presentation (plain HTML/CSS/JS, no build step) |
 | Python version | `src/hacker_stats.py` | NumPy simulation, exact Markov-chain answer, win-probability map |

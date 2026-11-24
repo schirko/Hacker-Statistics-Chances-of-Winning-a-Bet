@@ -14,10 +14,12 @@
 10. **Notebook 04: machine learning** (`notebooks/04_machine_learning.ipynb`, also on the site): models vs the exact ceiling, history features, AUC by roll, learning curve, k-means, isolation forest.
 11. **Notebook 05: learning when to stop** (`notebooks/05_q_learning_when_to_stop.ipynb`, also on the site): a stopping version of the game solved exactly and by Q-learning; code in `src/stopping.py` with tests.
 12. **Roll-or-stop game** (`docs/game.html`): play the stopping game in the browser; the exact best move, your expected loss per decision and a best-move map. Logic in `docs/stopping.js`, tested against the Python numbers in `tests/test_stopping.js`.
+13. **Notebook 06: learning the quit zone** (`notebooks/06_learning_the_quit_zone.ipynb`, also on the site): found why Q-learning missed the quit zone (games always started at step 0 and early optimistic scores were never forgotten), fixed it (payoff 0.4251 against the best 0.4259), swept the forgetting setting and compared a neural-network learner (5 to 10 times less experience, noisier); `q_learn_batch`, `fit_network` and `score_rule` in `src/stopping.py` with tests.
 
 ## Next, in priority order
 
-1. **Learn the quit zone**: Q-learning missed the small gain from quitting; try a decaying learning rate, many more games, or a neural network for the Q-values (notebook 06).
+1. **Show the learned rule in the game**: let the browser game offer a "bot" that plays the rule learned in notebook 06 next to the exact one.
+2. **Change the game**: re-run notebooks 05 and 06 with a different target, fee or number of rolls to see how the quit zone moves (the code takes these as settings).
 
 ## Known limits
 
