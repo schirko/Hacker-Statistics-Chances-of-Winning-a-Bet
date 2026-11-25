@@ -8373,7 +8373,7 @@ Payoff of the learned rule: 0.4122   exact best: 0.4259
 <h3 id="How-to-read-it">How to read it<a class="anchor-link" href="#How-to-read-it">¶</a></h3><p>Each row is a different fee. "Best payoff" is the exact best expected payoff. The two right-hand columns say how high a step still gets you to quit at roll 70 and at roll 90; "none" means no step is worth quitting at.</p>
 <h3 id="What-it-means">What it means<a class="anchor-link" href="#What-it-means">¶</a></h3><p>With no fee at all the best payoff is 0.811, which is the chance of ever reaching 60 within 100 rolls (a bit higher than the 77.7% chance of <em>finishing</em> on 60 or more, because you can stop the moment you get there). As the fee rises the best payoff falls steadily, and the quit line rises: at a fee of 0.02 even a climber on step 34 after 70 rolls should give up, and the best payoff is 0.000, which means the game is not worth starting at all. With no fee there is never a reason to quit, since waiting costs nothing.</p>
 <p>The shape of the answer matches common sense and the exact math says exactly how much: <strong>the more it costs to keep going, the earlier you should walk away.</strong></p>
-<h3 id="What's-next-and-why">What's next and why<a class="anchor-link" href="#What's-next-and-why">¶</a></h3><p>We now have the exact rule, a learner that found nearly the same rule on its own and a sense of how the rule moves with the fee. The summary pulls it together.</p>
+<h3 id="What's-next-and-why">What's next and why<a class="anchor-link" href="#What's-next-and-why">¶</a></h3><p>We now have the exact rule, a learner that found nearly the same rule on its own and a sense of how the rule moves with the fee. The summary pulls it together, and notebook 06 then goes back to the learner's one weakness (the quit zone) to find out why it happened and fix it.</p>
 </div>
 </div>
 </div>
@@ -8415,7 +8415,7 @@ Payoff of the learned rule: 0.4122   exact best: 0.4259
 </tr>
 <tr>
 <td>Where the learned rule differs</td>
-<td>the quit wedge (mostly missed) and rarely visited high steps</td>
+<td>the quit wedge (mostly missed; <strong>notebook 06 finds why and fixes it</strong>) and rarely visited high steps</td>
 <td>Rule comparison, weighted by visits</td>
 </tr>
 <tr>
@@ -8431,6 +8431,7 @@ Payoff of the learned rule: 0.4122   exact best: 0.4259
 <li>Q-learning needs no knowledge of the probabilities, only experience. From experience alone it found the main idea (collect the prize at the target), but missed the small extra gain from quitting, which the exact method finds easily. Learning from experience is slower and noisier when the differences between choices are small.</li>
 <li>Optimism at the start drives exploration, but it makes early performance worse than doing nothing.</li>
 <li>Because the exact answer exists, we could measure the learner honestly instead of trusting that it "seems to work".</li>
+<li><strong>What's next:</strong> the missed quit zone had two causes, and fixing both brings the learner to 0.4251 against the best 0.4259. That is notebook 06.</li>
 </ol>
 <p><strong>Where the code lives:</strong> <code>src/stopping.py</code> (functions <code>optimal_stopping</code>, <code>evaluate_policy</code>, <code>occupancy</code>, <code>q_learn</code>), covered by <code>tests/test_stopping.py</code>.</p>
 </div>
